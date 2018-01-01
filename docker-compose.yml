@@ -1,4 +1,5 @@
 front:
+  container_name: "front"
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
@@ -8,10 +9,11 @@ front:
   working_dir: /app
   ports:
     - "80:3000"
-  command: './front/entrypoint.sh'
+  command: '/app/entrypoint.sh'
 api:
+  container_name: "api"
   links:
-    - mongodb
+    - db
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
@@ -19,10 +21,10 @@ api:
   working_dir: /app
   ports:
     - "3001:3001"
-  command: './api/entrypoint.sh'
-mongodb:
+  command: '/app/entrypoint.sh'
+db:
+  container_name: "db"
   image: mongo:3.4.0
-  container_name: "mongodb"
   environment:
     - MONGO_DATA_DIR=/data/db
     - MONGO_LOG_DIR=/dev/null
@@ -32,6 +34,7 @@ mongodb:
       - 27017:27017
   command: mongod --smallfiles --logpath=/dev/null 
 static:
+  container_name: "static"
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
@@ -39,5 +42,6 @@ static:
   working_dir: /app
   ports:
     - "3002:3002"
+  volumes:
     - ~/.catalogue/files/:/var/www/catalogue_static/data:ro
-  command: './static/entrypoint.sh'
+  command: '/app/entrypoint.sh'

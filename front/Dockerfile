@@ -13,3 +13,4 @@ RUN mkdir -p /app
 RUN git clone https://github.com/wjsc/catalogue.git /app
 ADD ./entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
+EXPOSE 3000

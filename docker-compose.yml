@@ -1,0 +1,43 @@
+front:
+  environment:
+    TZ: "America/Argentina/Buenos_Aires"
+    NODE_ENV: "production"
+    REACT_APP_API: "http://192.168.1.2:3001/"
+    REACT_APP_CDN_URL: "http://192.168.1.2:3002/"
+  build: ./front
+  working_dir: /app
+  ports:
+    - "80:3000"
+  command: './front/entrypoint.sh'
+api:
+  links:
+    - mongodb
+  environment:
+    TZ: "America/Argentina/Buenos_Aires"
+    NODE_ENV: "production"
+  build: ./api
+  working_dir: /app
+  ports:
+    - "3001:3001"
+  command: './api/entrypoint.sh'
+mongodb:
+  image: mongo:3.4.0
+  container_name: "mongodb"
+  environment:
+    - MONGO_DATA_DIR=/data/db
+    - MONGO_LOG_DIR=/dev/null
+  volumes:
+    - ./data/db:/data/db
+  ports:
+      - 27017:27017
+  command: mongod --smallfiles --logpath=/dev/null 
+static:
+  environment:
+    TZ: "America/Argentina/Buenos_Aires"
+    NODE_ENV: "production"
+  build: ./static
+  working_dir: /app
+  ports:
+    - "3002:3002"
+    - ~/.catalogue/files/:/var/www/catalogue_static/data:ro
+  command: './static/entrypoint.sh'

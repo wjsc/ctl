@@ -41,5 +41,5 @@ static:
   ports:
     - "3002:3002"
   volumes:
-    - ~/.catalogue/files/:/var/www/catalogue_static/data:ro
+    - ~/.catalogue/files/:/app/data:ro
   command: '/app/entrypoint.sh'

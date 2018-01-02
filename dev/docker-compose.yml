@@ -17,6 +17,8 @@ api_dev:
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "development"
+    DB_HOST: "db_dev"
+    ORIGIN: "*"
   build: ./api
   working_dir: /app
   ports:

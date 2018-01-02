@@ -17,6 +17,8 @@ api_prd:
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
+    DB_HOST: "db_prd"
+    ORIGIN: "*"
   build: ./api
   working_dir: /app
   ports:

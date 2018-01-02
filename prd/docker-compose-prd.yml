@@ -1,19 +1,19 @@
-front:
-  container_name: "front"
+front_prd:
+  container_name: "front_prd"
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
-    REACT_APP_API: "http://192.168.1.2:3001/"
-    REACT_APP_CDN_URL: "http://192.168.1.2:3002/"
+    REACT_APP_API: "http://precision:3001/"
+    REACT_APP_CDN_URL: "http://precision:3002/"
   build: ./front
   working_dir: /app
   ports:
     - "80:3000"
   command: '/app/entrypoint.sh'
-api:
-  container_name: "api"
+api_prd:
+  container_name: "api_prd"
   links:
-    - db
+    - db_prd
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
@@ -22,8 +22,8 @@ api:
   ports:
     - "3001:3001"
   command: '/app/entrypoint.sh'
-db:
-  container_name: "db"
+db_prd:
+  container_name: "db_prd"
   image: mongo:3.4.0
   environment:
     - MONGO_DATA_DIR=/data/db
@@ -31,8 +31,8 @@ db:
   ports:
       - 27017:27017
   command: mongod --smallfiles --logpath=/dev/null 
-static:
-  container_name: "static"
+static_prd:
+  container_name: "static_prd"
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"

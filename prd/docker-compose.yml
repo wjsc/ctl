@@ -3,8 +3,8 @@ front_prd:
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
-    REACT_APP_API: "http://precision:3001/"
-    REACT_APP_CDN_URL: "http://precision:3002/"
+    REACT_APP_API: "http://13.27.3.239:3001/"
+    REACT_APP_CDN_URL: "http://13.27.3.239:3002/"
   build: ./front
   working_dir: /app
   ports:

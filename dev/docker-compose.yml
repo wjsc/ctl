@@ -8,7 +8,7 @@ front_dev:
   build: ./front
   working_dir: /app
   ports:
-    - "80:3000"
+    - "3000:3000"
   command: '/app/entrypoint.sh'
 api_dev:
   container_name: "api_dev"

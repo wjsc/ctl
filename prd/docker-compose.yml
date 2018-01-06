@@ -11,25 +11,14 @@ front_prd:
     - "80:3000"
 api_prd:
   container_name: "api_prd"
-  links:
-    - db_prd
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
-    DB_HOST: "db_prd"
+    DB_HOST: "13.27.3.239"
     ORIGIN: "*"
   build: ./api
   ports:
     - "3001:3001"
-db_prd:
-  container_name: "db_prd"
-  image: mongo:3.4.0
-  environment:
-    - MONGO_DATA_DIR=/data/db
-    - MONGO_LOG_DIR=/dev/null
-  ports:
-      - 27017:27017
-  command: mongod --smallfiles --logpath=/dev/null 
 static_prd:
   container_name: "static_prd"
   environment:

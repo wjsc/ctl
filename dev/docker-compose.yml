@@ -6,10 +6,8 @@ front_dev:
     REACT_APP_API: "http://localhost:3001/"
     REACT_APP_CDN_URL: "http://localhost:3002/"
   build: ./front
-  working_dir: /app
   ports:
     - "3000:3000"
-  command: '/app/entrypoint.sh'
 api_dev:
   container_name: "api_dev"
   links:
@@ -20,10 +18,8 @@ api_dev:
     DB_HOST: "db_dev"
     ORIGIN: "*"
   build: ./api
-  working_dir: /app
   ports:
     - "3001:3001"
-  command: '/app/entrypoint.sh'
 db_dev:
   container_name: "db_dev"
   image: mongo:3.4.0
@@ -39,9 +35,7 @@ static_dev:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "development"
   build: ./static
-  working_dir: /app
   ports:
     - "3002:3002"
   volumes:
     - ~/.catalogue/files/:/app/data:ro
-  command: '/app/entrypoint.sh'

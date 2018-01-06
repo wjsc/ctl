@@ -3,7 +3,10 @@ front_dev:
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "development"
+    NPM_CONFIG_PREFIX: "/home/node/.npm-global"
   build: ./front
+  volumes:
+    - ../catalogue/:/app:rw
   ports:
     - "3000:3000"
 api_dev:
@@ -13,9 +16,12 @@ api_dev:
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "development"
+    NPM_CONFIG_PREFIX: "/home/node/.npm-global"
     DB_HOST: "db_dev"
     ORIGIN: "*"
   build: ./api
+  volumes:
+    - ../catalogue-server/:/app:rw
   ports:
     - "3001:3001"
 db_dev:
@@ -32,8 +38,10 @@ static_dev:
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "development"
+    NPM_CONFIG_PREFIX: "/home/node/.npm-global"
   build: ./static
   ports:
     - "3002:3002"
   volumes:
+    - ../catalogue-static/:/app:rw
     - ~/.catalogue/files/:/app/data:ro

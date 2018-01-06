@@ -1,8 +1,6 @@
 FROM node:alpine
 WORKDIR /app
-RUN apk add --update git && rm -rf /var/cache/apk/*
-RUN git clone https://github.com/wjsc/catalogue-static.git /app
-RUN npm install
+RUN npm install -g pm2
+CMD pm2 --name static start -x src/index.js --no-daemon --watch "./src"
 EXPOSE 3002
-CMD [ "npm", "start" ]
 USER node

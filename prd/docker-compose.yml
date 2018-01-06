@@ -3,13 +3,12 @@ front_prd:
   environment:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
+    NPM_CONFIG_PREFIX: "/home/node/.npm-global"
     REACT_APP_API: "http://13.27.3.239:3001/"
     REACT_APP_CDN_URL: "http://13.27.3.239:3002/"
   build: ./front
-  working_dir: /app
   ports:
     - "80:3000"
-  command: '/app/entrypoint.sh'
 api_prd:
   container_name: "api_prd"
   links:
@@ -20,10 +19,8 @@ api_prd:
     DB_HOST: "db_prd"
     ORIGIN: "*"
   build: ./api
-  working_dir: /app
   ports:
     - "3001:3001"
-  command: '/app/entrypoint.sh'
 db_prd:
   container_name: "db_prd"
   image: mongo:3.4.0
@@ -39,9 +36,7 @@ static_prd:
     TZ: "America/Argentina/Buenos_Aires"
     NODE_ENV: "production"
   build: ./static
-  working_dir: /app
   ports:
     - "3002:3002"
   volumes:
     - ~/.catalogue/files/:/app/data:ro
-  command: '/app/entrypoint.sh'

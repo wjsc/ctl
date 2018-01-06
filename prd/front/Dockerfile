@@ -1,16 +1,10 @@
-FROM centos:7
-
-RUN curl -sL https://rpm.nodesource.com/setup_6.x | /bin/bash
-
-RUN yum install -y gcc-c++ make \
-  && yum install -y git \
-  && yum install -y nodejs npm
-
-RUN npm install -g pm2
-RUN npm install -g serve
-
-RUN mkdir -p /app
+FROM node:alpine
+WORKDIR /app
+RUN apk add --update git && rm -rf /var/cache/apk/*
 RUN git clone https://github.com/wjsc/catalogue.git /app
-ADD ./entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+RUN npm install
+RUN npm install -g serve
 EXPOSE 3000
+RUN npm run build --production
+CMD serve -p 3000 -s build
+USER node

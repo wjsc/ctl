@@ -5,6 +5,6 @@ RUN git clone https://github.com/wjsc/catalogue.git /app
 RUN npm install
 RUN npm install -g serve
 EXPOSE 3000
-RUN npm run build --production
+RUN export REACT_APP_API="http://35.198.38.188:3001/" && export REACT_APP_CDN_URL="http://35.198.38.188:3002/" && npm run build --production
 CMD serve -p 3000 -s build
 USER node

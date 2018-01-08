@@ -37,4 +37,4 @@ static_prd:
   ports:
     - "3002:3002"
   volumes:
-    - ~/.catalogue/files/:/app/data:ro
+    - /home/elballetdelosimbeciles/.catalogue/files/:/app/data:ro

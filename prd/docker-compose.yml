@@ -48,4 +48,3 @@ services:
       driver: gcplogs
 networks:
   default:
-    driver: custom-driver-1

@@ -10,6 +10,6 @@ RUN wget -O - https://codeload.github.com/wjsc/catalogue/tar.gz/$CODE_VERSION \
     && rm -Rf /app/node_modules \
     && npm install
 EXPOSE 3000
-RUN export REACT_APP_API="http://35.199.65.40:3001/" && export REACT_APP_CDN_URL="http://35.199.65.40:3002/" && npm run build --production
+RUN export REACT_APP_API="http://api.catalogue.cf/" && export REACT_APP_CDN_URL="http://static.catalogue.cf/" && npm run build --production
 CMD serve -p 3000 -s build
 USER node

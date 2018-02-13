@@ -1,5 +1,13 @@
 version: '3'
 services:
+  traefik:
+    container_name: "traefik"
+    image: traefik:1.5.2-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml:ro
   front_prd:
     container_name: "front_prd"
     environment:
@@ -8,9 +16,12 @@ services:
       NPM_CONFIG_PREFIX: "/home/node/.npm-global"
     build: ./front
     ports:
-      - "80:3000"
-    logging:
-      driver: gcplogs
+      - "3000:3000"
+    labels:
+      traefik.backend: "front"
+      traefik.frontend.rule: "Host:catalogue.cf"
+      traefik.enable: "true"
+      traefik.port: "3000"
   api_prd:
     container_name: "api_prd"
     environment:
@@ -21,8 +32,11 @@ services:
     build: ./api
     ports:
       - "3001:3001"
-    logging:
-      driver: gcplogs
+    labels:
+      traefik.backend: "api"
+      traefik.frontend.rule: "Host:api.catalogue.cf"
+      traefik.enable: "true"
+      traefik.port: "3001"
   db_prd:
     container_name: "db_prd"
     image: mongo:3.4.0
@@ -32,8 +46,6 @@ services:
     ports:
         - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null 
-    logging:
-      driver: gcplogs
   static_prd:
     container_name: "static_prd"
     environment:
@@ -43,8 +55,11 @@ services:
     ports:
       - "3002:3002"
     volumes:
-      - /home/elballetdelosimbeciles/.catalogue/files/:/app/data:ro
-    logging:
-      driver: gcplogs
+      - ${CATALOGUE_FILES}:/app/data:ro
+    labels:
+      traefik.backend: "static"
+      traefik.frontend.rule: "Host:static.catalogue.cf"
+      traefik.enable: "true"
+      traefik.port: "3002"
 networks:
   default:

@@ -7,7 +7,7 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.toml:/traefik.toml:ro
+      - /home/elballetdelosimbeciles/ctl/prd/traefik.toml:/traefik.toml:ro
   front_prd:
     container_name: "front_prd"
     environment:
@@ -34,7 +34,7 @@ services:
       - "3001:3001"
     labels:
       traefik.backend: "api"
-      traefik.frontend.rule: "Host:api.catalogue.cf"
+      traefik.frontend.rule: "Host:api.catalogue.cf,www.api.catalogue.cf"
       traefik.enable: "true"
       traefik.port: "3001"
   db_prd:
@@ -55,7 +55,7 @@ services:
     ports:
       - "3002:3002"
     volumes:
-      - ${CATALOGUE_FILES}:/app/data:ro
+      - /home/elballetdelosimbeciles/.catalogue/files/:/app/data:ro
     labels:
       traefik.backend: "static"
       traefik.frontend.rule: "Host:static.catalogue.cf"

@@ -19,7 +19,7 @@ services:
       - "3000:3000"
     labels:
       traefik.backend: "front"
-      traefik.frontend.rule: "Host:catalogue.cf"
+      traefik.frontend.rule: "Host:catalogue.cf,www.catalogue.cf,"
       traefik.enable: "true"
       traefik.port: "3000"
   api_prd:
@@ -34,7 +34,7 @@ services:
       - "3001:3001"
     labels:
       traefik.backend: "api"
-      traefik.frontend.rule: "Host:api.catalogue.cf,www.api.catalogue.cf"
+      traefik.frontend.rule: "Host:api.catalogue.cf"
       traefik.enable: "true"
       traefik.port: "3001"
   db_prd:

@@ -1,43 +1,62 @@
-front_dev:
-  container_name: "front_dev"
-  environment:
-    TZ: "America/Argentina/Buenos_Aires"
-    NODE_ENV: "development"
-    NPM_CONFIG_PREFIX: "/home/node/.npm-global"
-  build: ./front
-  volumes:
-    - ../catalogue/:/app:rw
-  ports:
-    - "3000:3000"
-api_dev:
-  container_name: "api_dev"
-  links:
-    - db_dev
-  environment:
-    TZ: "America/Argentina/Buenos_Aires"
-    NODE_ENV: "development"
-    NPM_CONFIG_PREFIX: "/home/node/.npm-global"
-    DB_HOST: "db_dev"
-    CACHE_MAX_AGE: 0
-    ORIGIN: "*"
-  build: ./api
-  volumes:
-    - ../catalogue-server/:/app:rw
-  ports:
-    - "3001:3001"
-db_dev:
-  container_name: "db_dev"
-  image: mongo:3.4.0
-  environment:
-    - MONGO_DATA_DIR=/data/db
-    - MONGO_LOG_DIR=/dev/null
-  ports:
-      - 27017:27017
-  command: mongod --smallfiles --logpath=/dev/null 
-static_dev:
-  container_name: "static_dev"
-  image: nginx:1.13.8-alpine
-  ports:
-    - 3002:80
-  volumes:
-    - ~/.catalogue/files/:/usr/share/nginx/html:ro
+version: '3'
+services:
+  traefik:
+      container_name: "traefik"
+      image: traefik:1.5.2-alpine
+      ports:
+        - "80:80"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./traefik.toml:/traefik.toml:ro
+  front_dev:
+    container_name: "front_dev"
+    environment:
+      TZ: "America/Argentina/Buenos_Aires"
+      NODE_ENV: "development"
+      NPM_CONFIG_PREFIX: "/home/node/.npm-global"
+    build: ./front
+    labels:
+        traefik.backend: "front"
+        traefik.frontend.rule: "Host:catalogue"
+        traefik.enable: "true"
+        traefik.port: "3000"
+    volumes:
+      - ../catalogue/:/app:rw
+  api_dev:
+    container_name: "api_dev"
+    links:
+      - db_dev
+    environment:
+      TZ: "America/Argentina/Buenos_Aires"
+      NODE_ENV: "development"
+      NPM_CONFIG_PREFIX: "/home/node/.npm-global"
+      DB_HOST: "db_dev"
+      CACHE_MAX_AGE: 0
+      ORIGIN: "*"
+    build: ./api
+    labels:
+        traefik.backend: "api"
+        traefik.frontend.rule: "Host:api.catalogue"
+        traefik.enable: "true"
+        traefik.port: "3001"
+    volumes:
+      - ../catalogue-server/:/app:rw
+  db_dev:
+    container_name: "db_dev"
+    image: mongo:3.4.0
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    command: mongod --smallfiles --logpath=/dev/null
+  static_dev:
+    container_name: "static_dev"
+    image: nginx:1.13.8-alpine
+    volumes:
+      - ~/.catalogue/files/:/usr/share/nginx/html:ro
+    labels:
+        traefik.backend: "static"
+        traefik.frontend.rule: "Host:static.catalogue"
+        traefik.enable: "true"
+        traefik.port: "80"
+networks:
+  default:

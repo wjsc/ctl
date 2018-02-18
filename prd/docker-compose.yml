@@ -15,8 +15,6 @@ services:
       NODE_ENV: "production"
       NPM_CONFIG_PREFIX: "/home/node/.npm-global"
     build: ./front
-    ports:
-      - "3000:3000"
     labels:
       traefik.backend: "front"
       traefik.frontend.rule: "Host:catalogue.cf,www.catalogue.cf,"
@@ -30,8 +28,6 @@ services:
       DB_HOST: "db_prd"
       ORIGIN: "*"
     build: ./api
-    ports:
-      - "3001:3001"
     labels:
       traefik.backend: "api"
       traefik.frontend.rule: "Host:api.catalogue.cf"
@@ -43,20 +39,16 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
-    ports:
-        - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null 
   static_prd:
     container_name: "static_prd"
     image: nginx:1.13.8-alpine
-    ports:
-      - 3002:80
     volumes:
       - /home/elballetdelosimbeciles/.catalogue/files/:/usr/share/nginx/html:ro
     labels:
       traefik.backend: "static"
       traefik.frontend.rule: "Host:static.catalogue.cf"
       traefik.enable: "true"
-      traefik.port: "3002"
+      traefik.port: "80"
 networks:
   default:

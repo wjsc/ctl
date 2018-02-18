@@ -11,7 +11,7 @@ address = ":3001"
 
 # STATIC FILES SERVER (jpeg, mp3) interface of Traefik
 [static]
-address = ":3002"
+address = ":80"
 
 # Connection to docker host system (docker.sock)
 [docker]

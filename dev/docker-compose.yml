@@ -36,13 +36,8 @@ db_dev:
   command: mongod --smallfiles --logpath=/dev/null 
 static_dev:
   container_name: "static_dev"
-  environment:
-    TZ: "America/Argentina/Buenos_Aires"
-    NODE_ENV: "development"
-    NPM_CONFIG_PREFIX: "/home/node/.npm-global"
-  build: ./static
+  image: nginx:1.13.8-alpine
   ports:
-    - "3002:3002"
+    - 3002:80
   volumes:
-    - ../catalogue-static/:/app:rw
-    - ~/.catalogue/files/:/app/data:ro
+    - ~/.catalogue/files/:/usr/share/nginx/html:ro

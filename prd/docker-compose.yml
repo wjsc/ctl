@@ -48,14 +48,11 @@ services:
     command: mongod --smallfiles --logpath=/dev/null 
   static_prd:
     container_name: "static_prd"
-    environment:
-      TZ: "America/Argentina/Buenos_Aires"
-      NODE_ENV: "production"
-    build: ./static
+    image: nginx:1.13.8-alpine
     ports:
-      - "3002:3002"
+      - 3002:80
     volumes:
-      - /home/elballetdelosimbeciles/.catalogue/files/:/app/data:ro
+      - /home/elballetdelosimbeciles/.catalogue/files/:/usr/share/nginx/html:ro
     labels:
       traefik.backend: "static"
       traefik.frontend.rule: "Host:static.catalogue.cf"

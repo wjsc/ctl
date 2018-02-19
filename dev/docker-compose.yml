@@ -45,6 +45,8 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ~/.catalogue/db/:/data/db/:rw
     command: mongod --smallfiles --logpath=/dev/null
   static_dev:
     container_name: "static_dev"

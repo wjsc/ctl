@@ -39,6 +39,8 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - /home/elballetdelosimbeciles/.catalogue/db/:/data/db/:rw
     command: mongod --smallfiles --logpath=/dev/null 
   static_prd:
     container_name: "static_prd"

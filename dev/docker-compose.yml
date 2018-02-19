@@ -31,8 +31,6 @@ services:
       NODE_ENV: "development"
       NPM_CONFIG_PREFIX: "/home/node/.npm-global"
       DB_HOST: "db_dev"
-      CACHE_MAX_AGE: 0
-      ORIGIN: "*"
     build: ./api
     labels:
         traefik.backend: "api"

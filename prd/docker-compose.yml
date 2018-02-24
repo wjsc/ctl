@@ -27,7 +27,6 @@ services:
       TZ: "America/Argentina/Buenos_Aires"
       NODE_ENV: "production"
       DB_HOST: "db_prd"
-      ORIGIN: "https://catalogue.cf,https://www.catalogue.cf"
     build: ./api
     labels:
       traefik.backend: "api"

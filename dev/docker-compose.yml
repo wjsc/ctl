@@ -17,7 +17,8 @@ services:
     build: ./front
     labels:
         traefik.backend: "front"
-        traefik.frontend.rule: "Host:catalogue"
+        traefik.frontend.rule: "Host:catalogue;"
+        traefik.frontend.priority: "1"
         traefik.enable: "true"
         traefik.port: "3000"
     volumes:
@@ -34,7 +35,8 @@ services:
     build: ./api
     labels:
         traefik.backend: "api"
-        traefik.frontend.rule: "Host:api.catalogue"
+        traefik.frontend.rule: "Host:catalogue;PathPrefixStrip:/api"
+        traefik.frontend.priority: "2"
         traefik.enable: "true"
         traefik.port: "3001"
     volumes:
@@ -55,7 +57,8 @@ services:
       - ~/.catalogue/files/:/usr/share/nginx/html:ro
     labels:
         traefik.backend: "static"
-        traefik.frontend.rule: "Host:static.catalogue"
+        traefik.frontend.rule: "Host:catalogue;PathPrefixStrip:/lib"
+        traefik.frontend.priority: "2"
         traefik.enable: "true"
         traefik.port: "80"
 networks:

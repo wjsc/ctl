@@ -1,3 +1,4 @@
+```bash
 git clone https://github.com/wjsc/ctl.git
 cd ctl
 git clone https://github.com/wjsc/catalogue.git
@@ -12,3 +13,4 @@ npm install
 cd ctl/dev
 docker-compose build
 docker-compose up -d
+```

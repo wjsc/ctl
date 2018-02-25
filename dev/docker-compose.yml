@@ -14,7 +14,7 @@ services:
       TZ: "America/Argentina/Buenos_Aires"
       NODE_ENV: "development"
       NPM_CONFIG_PREFIX: "/home/node/.npm-global"
-      REACT_MILISECONDS_PLAY: 999999
+      REACT_APP_MILISECONDS_PLAY: 999999
     build: ./front
     labels:
         traefik.backend: "front"

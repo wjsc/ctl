@@ -4,7 +4,7 @@ RUN npm install -g serve
 RUN apk update \                                                                                                                                                                                                                        
     && apk add ca-certificates wget \                                                                                                                                                                                                      
     && update-ca-certificates
-ENV CODE_VERSION v2.5.2
+ENV CODE_VERSION v2.5.3
 RUN wget -O - https://codeload.github.com/wjsc/catalogue/tar.gz/$CODE_VERSION \
     | tar -xz --strip-components 1 -C /app \
     && npm install

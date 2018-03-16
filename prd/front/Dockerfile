@@ -8,5 +8,5 @@ ENV CODE_VERSION v2.5.4
 RUN wget -O -  https://github.com/wjsc/catalogue/releases/download/$CODE_VERSION/build.tar.gz \
     | tar -xz --strip-components 1 -C /app
 EXPOSE 3000
-CMD serve -p 3000 -s build
+CMD serve -p 3000 -s /app
 USER node

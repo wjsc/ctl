@@ -4,7 +4,7 @@ RUN npm install -g serve
 RUN apk update \                                                                                                                                                                                                                        
     && apk add ca-certificates wget \                                                                                                                                                                                                      
     && update-ca-certificates
-ENV CODE_VERSION v2.5.4
+ENV CODE_VERSION v2.6.0
 RUN wget -O -  https://github.com/wjsc/catalogue/releases/download/$CODE_VERSION/build.tar.gz \
     | tar -xz --strip-components 1 -C /app
 EXPOSE 3000
